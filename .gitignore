@@ -4,7 +4,6 @@
 .DS_Store
 
 .htaccess
-config.php
 verify.php
 
 posts/*.md
