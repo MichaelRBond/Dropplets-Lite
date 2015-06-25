@@ -116,7 +116,7 @@ if ($filename==NULL) {
             }
 
             // Get the post image url.
-            $post_image = get_post_image_url( $post['fname'] ) ?: get_twitter_profile_img($post_author_twitter);
+            $post_image = get_post_image_url( $post['fname'] );
 
             if ($post_status == 'draft') continue;
 
@@ -335,7 +335,7 @@ else {
         $post_link = $blog_url.str_replace(array(FILE_EXT, POSTS_DIR), '', $filename);
 
         // Get the post image url.
-        $post_image = get_post_image_url($filename) ?: get_twitter_profile_img($post_author_twitter);
+        $post_image = get_post_image_url($filename);
 
         // Get the post content
         $file_array = array_slice( file($filename), 7);
