@@ -1,6 +1,12 @@
 Dropplets
 =========
 
+Changes from Original Dropplets:
+1) Removed Twitter profile picture retrieval
+2) Removed all features that required a login have been removed. Upload posts directly to posts folder
+3) Welcome section of homepage has been removed from the simple template
+4) Added default config.php and .htaccess files
+
 Dropplets is a minimalist **Markdown** blogging platform focused on delivering just what you need in a blogging solution, but absolutely nothing you don't. When it comes to basic blogging, all you really want to do is write & publish which is where Dropplets excels. It's databaseless, so it installs on any server in just about 30 seconds. 
 
 ## What's Markdown?
