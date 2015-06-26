@@ -160,20 +160,7 @@ if (is_null($filename)) {
 
         ob_end_clean();
     } else {
-        ob_start();
-
-        // Define the site title.
-        $page_title = $error_title;
-        $page_meta = '';
-
-        // Get the 404 page template.
-        include $not_found_file;
-
-        //Get the contents
-        $content = ob_get_contents();
-
-        //Flush the buffer so that we dont get the page 2x times
-        ob_end_clean();
+       serve_404();
     }
         ob_start();
 
@@ -247,43 +234,17 @@ else if ($filename == 'rss' || $filename == 'atom') {
 /*-----------------------------------------------------------------------------------*/
 
 else {
-    ob_start();
-
-    // Define the post file.
-    $fcontents = file($filename);
 
     // Define the cached file.
     $cachefile = sprintf("%s%s.html",CACHE_DIR,basename($filename,FILE_EXT));
 
     // If there's no file for the selected permalink, grab the 404 page template.
     if (!file_exists($filename)) {
+        serve_404();
+    }
 
-        //Change the cache file to 404 page.
-        $cachefile = CACHE_DIR.'404.html';
-
-        // Define the site title.
-        $page_title = $error_title;
-
-        // Get the 404 page template.
-        include $not_found_file;
-
-        // Get the contents.
-        $content = ob_get_contents();
-
-        // Flush the buffer so that we dont get the page 2x times.
-        ob_end_clean();
-
-        // Start new buffer.
-        ob_start();
-
-	      // Get the index template file.
-        include_once $index_file;
-
-        // Cache the post on if caching is turned on.
-        save_cache($cachefile,ob_get_contents());
-
-    // If there is a cached file for the selected permalink, display the cached post.
-    } else if (file_exists($cachefile)) {
+    // If there is a cached file for the selected permalink, display the cached post. 
+    else if (file_exists($cachefile)) {
 
         // Define site title
         $page_title = str_replace('# ', '', $fcontents[0]);
@@ -293,8 +254,13 @@ else {
 
         exit;
 
+    } 
     // If there is a file for the selected permalink, display and cache the post.
-    } else {
+    else {
+        ob_start();
+        
+        // Define the post file.
+        $fcontents = file($filename);
 
         // Get the post title.
         $post_title = Markdown($fcontents[0]);

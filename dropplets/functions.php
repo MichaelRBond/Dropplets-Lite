@@ -16,6 +16,9 @@ include('./dropplets/includes/actions.php');
 /* Save Cache
 /*-----------------------------------------------------------------------------------*/
 function save_cache($cachefile,$content) {
+
+    global $post_cache;
+
     if ($post_cache != 'off') {
 
         try {
@@ -32,6 +35,51 @@ function save_cache($cachefile,$content) {
     }
 
     return true;
+}
+
+/*-----------------------------------------------------------------------------------*/
+/* Serve 404 Error
+/*-----------------------------------------------------------------------------------*/
+
+function serve_404() {
+
+    // @TODO This is horrible. Settings need to be plopped into a variable
+    // that can be referenced as a class
+    include('./dropplets/settings.php');
+
+    //Change the cache file to 404 page.
+    $cachefile = CACHE_DIR.'404.html';
+
+    // Define the site title.
+    $page_title = $error_title;
+
+    if (file_exists($cachefile)) {
+        include $cachefile;
+        exit;
+    }
+
+    // Start the Output buffer
+    ob_start();
+    
+    // Get the 404 page template.
+    include $not_found_file;
+
+    // Get the contents.
+    $content = ob_get_contents();
+
+    // Flush the buffer so that we dont get the page 2x times.
+    ob_end_clean();
+
+    // Start new buffer.
+    ob_start();
+
+    // Get the index template file.
+    include_once $index_file;
+
+    // Cache the post on if caching is turned on.
+    save_cache($cachefile,ob_get_contents());
+
+    exit;
 }
 
 /*-----------------------------------------------------------------------------------*/
@@ -332,7 +380,6 @@ function get_footer() { ?>
     <?php } ?>
     
     <!-- Dropplets Tools -->
-    <?php include('./dropplets/tools.php'); ?>
     
     <!-- User Footer Injection -->
     <?php echo FOOTER_INJECT; ?>
