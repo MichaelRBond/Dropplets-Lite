@@ -82,7 +82,7 @@ if (is_null($filename)) {
         foreach($posts as $post) {
 
             // Get the post title.
-            $post_title = str_replace(array("\n",'<h1>','</h1>'), '', $post['post_title']);
+            $post_title = format_title($post['post_title']);
 
             // Get the post author.
             $post_author = $post['post_author'];
@@ -243,8 +243,7 @@ else {
         $fcontents = file($filename);
 
         // Get the post title.
-        $post_title = Markdown($fcontents[0]);
-        $post_title = str_replace(array("\n",'<h1>','</h1>'), '', $post_title);
+        $post_title = format_title($fcontents[0]);
 
         // Get the post intro.
         $post_intro = htmlspecialchars(trim($fcontents[7]));
@@ -274,11 +273,7 @@ else {
         $post_image = get_post_image_url($filename);
 
         // Get the post content
-        $file_array = array_slice( $fcontents, 7);
-        $post_content = Markdown(trim(implode("", $file_array)));
-
-        // free memory
-        unset($file_array);
+        $post_content = Markdown(trim(implode("", array_slice( $fcontents, 7))));
                 
         // Get the site title.
         $page_title = trim(str_replace('# ', '', $fcontents[0]));
