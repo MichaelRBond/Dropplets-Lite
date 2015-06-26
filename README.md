@@ -12,6 +12,13 @@ For more information on Dropplets check out the [Dropplets GitHub page](https://
 1. Removed phpass dependancy
 1. Refactoring. 
 
+## TODO
+
+1. automatically check for expired cache
+1. Improve settings/config loading
+1. Updates to simple for page links
+1. Google Analytics integration
+
 
 ## Getting Started
 - [Installation](#installation)
