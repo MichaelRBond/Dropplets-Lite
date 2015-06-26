@@ -6,10 +6,8 @@ session_start();
 /* If the config file doesn't exist, Tell the user to copy over the config file
 /*-----------------------------------------------------------------------------------*/
 if (!file_exists('./config.php')) {
-
-include "config.html";
-
-exit;
+    include "config.html";
+    exit;
 }
 
 /*-----------------------------------------------------------------------------------*/
