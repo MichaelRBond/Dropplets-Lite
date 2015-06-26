@@ -83,6 +83,37 @@ function serve_404() {
 }
 
 /*-----------------------------------------------------------------------------------*/
+/* Get All meta tags for the page
+/*-----------------------------------------------------------------------------------*/
+
+function get_page_meta() {
+
+    // @TODO This is horrible. Settings need to be plopped into a variable
+    // that can be referenced as a class
+    include('./dropplets/settings.php');
+
+    $get_page_meta = array();
+
+    // Get the Twitter card.
+    $get_page_meta[] = '<meta name="twitter:card" content="summary">';
+    $get_page_meta[] = '<meta name="twitter:site" content="' . $blog_twitter . '">';
+    $get_page_meta[] = '<meta name="twitter:title" content="' . $blog_title . '">';
+    $get_page_meta[] = '<meta name="twitter:description" content="' . $meta_description . '">';
+    $get_page_meta[] = '<meta name="twitter:creator" content="' . $blog_twitter . '">';
+    $get_page_meta[] = '<meta name="twitter:domain" content="' . $blog_url . '">';
+
+    // Get the Open Graph tags.
+    $get_page_meta[] = '<meta property="og:type" content="website">';
+    $get_page_meta[] = '<meta property="og:title" content="' . $blog_title . '">';
+    $get_page_meta[] = '<meta property="og:site_name" content="' . $blog_title . '">';
+    $get_page_meta[] = '<meta property="og:url" content="' .$blog_url . '">';
+    $get_page_meta[] = '<meta property="og:description" content="' . $meta_description . '">';
+
+    return $get_page_meta;
+
+}
+
+/*-----------------------------------------------------------------------------------*/
 /* Get All Posts Function
 /*-----------------------------------------------------------------------------------*/
 
