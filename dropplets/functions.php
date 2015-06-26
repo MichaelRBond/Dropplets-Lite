@@ -15,11 +15,9 @@ include('./dropplets/includes/actions.php');
 /*-----------------------------------------------------------------------------------*/
 /* Save Cache
 /*-----------------------------------------------------------------------------------*/
-function save_cache($cachefile,$content) {
+function save_cache($cachefile,$content,$cache='on') {
 
-    global $post_cache;
-
-    if ($post_cache != 'off') {
+    if ($cache != 'off') {
 
         try {
             if (($fp = fopen($cachefile, 'w')) === false) {
@@ -35,6 +33,21 @@ function save_cache($cachefile,$content) {
     }
 
     return true;
+}
+
+/*-----------------------------------------------------------------------------------*/
+/* Serve Cache
+/*-----------------------------------------------------------------------------------*/
+function serve_cache($cachefile,$page_title) {
+
+    // Define site title
+    $page_title = str_replace('# ', '', $page_title);
+
+    // Get the cached post.
+    include $cachefile;
+
+    exit;
+
 }
 
 /*-----------------------------------------------------------------------------------*/

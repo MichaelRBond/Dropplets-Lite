@@ -148,11 +148,7 @@ if (is_null($filename)) {
         include_once $index_file;
 
         //Now that we have the whole index page generated, put it in cache folder
-        if ($index_cache != 'off') {
-            $fp = fopen($cachefile, 'w');
-            fwrite($fp, ob_get_contents());
-            fclose($fp);
-        }
+        save_cache($cachefile,ob_get_contents(),$index_cache);
     }
 
 /*-----------------------------------------------------------------------------------*/
@@ -274,7 +270,7 @@ else {
         include_once $index_file;
 
         // Cache the post on if caching is turned on.
-        save_cache($cachefile,ob_get_contents());
+        save_cache($cachefile,ob_get_contents(),$post_cache);
     }
 }
 
