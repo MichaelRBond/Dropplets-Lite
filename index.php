@@ -274,7 +274,7 @@ else {
         $post_image = get_post_image_url($filename);
 
         // Get the post content
-        $file_array = array_slice( file($filename), 7);
+        $file_array = array_slice( $fcontents, 7);
         $post_content = Markdown(trim(implode("", $file_array)));
 
         // free memory
