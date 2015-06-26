@@ -280,12 +280,7 @@ else {
         include_once $index_file;
 
         // Cache the post on if caching is turned on.
-        if ($post_cache != 'off')
-        {
-            $fp = fopen($cachefile, 'w');
-            fwrite($fp, ob_get_contents());
-            fclose($fp);
-        }
+        save_cache($cachefile,ob_get_contents());
 
     // If there is a cached file for the selected permalink, display the cached post.
     } else if (file_exists($cachefile)) {
@@ -383,12 +378,7 @@ else {
         include_once $index_file;
 
         // Cache the post on if caching is turned on.
-        if ($post_cache != 'off')
-        {
-            $fp = fopen($cachefile, 'w');
-            fwrite($fp, ob_get_contents());
-            fclose($fp);
-        }
+        save_cache($cachefile,ob_get_contents());
     }
 }
 
