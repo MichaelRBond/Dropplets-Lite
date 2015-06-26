@@ -97,7 +97,7 @@ if (is_null($filename)) {
             $post_category = $post['post_category'];
             
             // Get the post category link.
-            $post_category_link = $blog_url.'category/'.urlencode(trim(strtolower($post_category)));
+            $post_category_link = get_category_link($post_category);
 
             // Get the post status.
             $post_status = trim(strtolower($post['post_status']));
@@ -264,7 +264,7 @@ else {
         $post_status = str_replace(array("\n", '- '), '', $fcontents[5]);
         
         // Get the post category link.
-        $post_category_link = $blog_url.'category/'.urlencode(trim(strtolower($post_category)));
+        $post_category_link = get_category_link($post_category);
 
         // Get the post link.
         $post_link = $blog_url.str_replace(array(FILE_EXT, POSTS_DIR), '', $filename);

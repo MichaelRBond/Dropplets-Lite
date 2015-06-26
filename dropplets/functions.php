@@ -114,6 +114,19 @@ function get_page_meta() {
 }
 
 /*-----------------------------------------------------------------------------------*/
+/* Post Category Link
+/*-----------------------------------------------------------------------------------*/
+function get_category_link($category) {
+
+    // @TODO This is horrible. Settings need to be plopped into a variable
+    // that can be referenced as a class
+    include('./dropplets/settings.php');
+
+    return $blog_url.'category/'.urlencode(trim(strtolower($category)));
+
+}
+
+/*-----------------------------------------------------------------------------------*/
 /* Format Post Title
 /*-----------------------------------------------------------------------------------*/
 
