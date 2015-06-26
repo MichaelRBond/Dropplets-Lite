@@ -74,33 +74,16 @@ if (is_null($filename)) {
         ob_start();
         $content = '';
         foreach($posts as $post) {
-
-            // Get the post title.
-            $post_title = format_title($post['post_title']);
-
-            // Get the post author.
-            $post_author = format_author($post['post_author']);
-
-            // Get the post author twitter id.
-            $post_author_twitter = $post['post_author_twitter'];
-
-            // Generate the published date.
-            $published_date = format_date($post['post_date']);
-
-            // Get the post category.
-            $post_category = $post['post_category'];
             
-            // Get the post category link.
-            $post_category_link = get_category_link($post_category);
-
-            // Get the post status.
-            $post_status = trim(strtolower($post['post_status']));
-
-            // Get the post intro.
-            $post_intro = $post['post_intro'];
-
-            // Get the post content
-            $post_content = $post['post_content'];
+            $post_title          = format_title($post['post_title']);                   // Get the post title.
+            $post_author         = format_author($post['post_author']);                 // Get the post author.
+            $post_author_twitter = render_author_twitter($post['post_author_twitter']); // Get the post author twitter id.
+            $published_date      = format_date($post['post_date']);                     // Generate the published date.
+            $post_category       = render_category($post['post_category']);             // Get the post category.
+            $post_category_link  = get_category_link($post_category);                   // Get the post category link.
+            $post_status         = render_status($post['post_status']);                 // Get the post status.
+            $post_intro          = render_intro($post['post_intro']);                   // Get the post intro.
+            $post_content        = $post['post_content'];                               // Get the post content
 
             // Get the post link.
             if ($category) {
@@ -220,17 +203,17 @@ else {
     $fcontents           = file($filename); // Define the post file.
 
     $post_title          = format_title($fcontents[0]);  // Get the post title.
-    $post_intro          = htmlspecialchars(trim($fcontents[7])); // Get the post intro.
+    $post_intro          = render_intro($fcontents[7]); // Get the post intro.
     $post_author         = format_author($fcontents[1]);  // Get the post author.
-    $post_author_twitter = str_replace(array("\n", '- '), '', $fcontents[2]); // Get the post author Twitter ID.
+    $post_author_twitter = render_author_twitter($fcontents[2]); // Get the post author Twitter ID.
     $published_date      = format_date($fcontents[3]); // Generate the published date.
-    $post_category       = str_replace(array("\n", '-'), '', $fcontents[4]); // Get the post category.
-    $post_status         = str_replace(array("\n", '- '), '', $fcontents[5]); // Get the post status.
+    $post_category       = render_category($fcontents[4]); // Get the post category.
+    $post_status         = render_status($fcontents[5]); // Get the post status.
     $post_category_link  = get_category_link($post_category); // Get the post category link.
-    $post_link           = $blog_url.str_replace(array(FILE_EXT, POSTS_DIR), '', $filename); // Get the post link.
+    $post_link           = render_post_link($filename); // Get the post link.
     $post_image          = get_post_image_url($filename); // Get the post image url.
     $post_content        = Markdown(trim(implode("", array_slice( $fcontents, 7)))); // Get the post content
-    $page_title          = trim(str_replace('# ', '', $fcontents[0])); // Get the site title.
+    $page_title          = render_page_title($fcontents[0]); // Get the site title.
 
     $get_page_meta = get_page_meta();
 

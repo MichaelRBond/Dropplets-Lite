@@ -140,6 +140,59 @@ function get_category_link($category) {
 }
 
 /*-----------------------------------------------------------------------------------*/
+/* Format Post intro
+/*-----------------------------------------------------------------------------------*/
+
+function render_intro($intro) {
+
+    return htmlspecialchars(trim($intro));
+}
+
+/*-----------------------------------------------------------------------------------*/
+/* Format Post twitter author
+/*-----------------------------------------------------------------------------------*/
+function render_author_twitter($twitter_handle) {
+
+    return str_replace(array("\n", '- '), '', $twitter_handle);
+}
+
+/*-----------------------------------------------------------------------------------*/
+/* Format Post category
+/*-----------------------------------------------------------------------------------*/
+function render_category($category) {
+
+    return str_replace(array("\n", '-'), '', $category);
+}
+
+/*-----------------------------------------------------------------------------------*/
+/* Format Post status
+/*-----------------------------------------------------------------------------------*/
+function render_status($status) {
+
+    return str_replace(array("\n", '- '), '', $status);
+}
+
+/*-----------------------------------------------------------------------------------*/
+/* Format Post link
+/*-----------------------------------------------------------------------------------*/
+function render_post_link($filename) {
+
+    // @TODO This is horrible. Settings need to be plopped into a variable
+    // that can be referenced as a class
+    include('./dropplets/settings.php');
+
+    return $blog_url.str_replace(array(FILE_EXT, POSTS_DIR), '', $filename);
+}
+
+/*-----------------------------------------------------------------------------------*/
+/* Format Post Page Title
+/*-----------------------------------------------------------------------------------*/
+function render_page_title($title) {
+
+    return trim(str_replace('# ', '', $title));
+}
+
+/*-----------------------------------------------------------------------------------*/
 /* Format Post Title
 /*-----------------------------------------------------------------------------------*/
 
