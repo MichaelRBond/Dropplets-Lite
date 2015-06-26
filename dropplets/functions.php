@@ -114,6 +114,25 @@ function get_page_meta() {
 }
 
 /*-----------------------------------------------------------------------------------*/
+/* Format Post Dates
+/*-----------------------------------------------------------------------------------*/
+
+function format_date($date) {
+
+    // @TODO This is horrible. Settings need to be plopped into a variable
+    // that can be referenced as a class
+    include('./dropplets/settings.php');
+
+    $published_iso_date = str_replace('-', '', $date);
+
+    // Generate the published date.
+    $published_date = date($date_format, strtotime($published_iso_date));
+
+    return $published_date;
+
+}
+
+/*-----------------------------------------------------------------------------------*/
 /* Get All Posts Function
 /*-----------------------------------------------------------------------------------*/
 

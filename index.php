@@ -90,11 +90,8 @@ if (is_null($filename)) {
             // Get the post author twitter id.
             $post_author_twitter = $post['post_author_twitter'];
 
-            // Get the published ISO date.
-            $published_iso_date = $post['post_date'];
-
             // Generate the published date.
-            $published_date = strftime($date_format, strtotime($published_iso_date));
+            $published_date = format_date($post['post_date']);
 
             // Get the post category.
             $post_category = $post['post_category'];
@@ -133,7 +130,7 @@ if (is_null($filename)) {
         $page_title = $blog_title;
 
         $get_page_meta = get_page_meta();
-        
+
         // Get the page description and author meta.
         $get_page_meta[] = '<meta name="description" content="' . $meta_description . '">';
         $get_page_meta[] = '<meta name="author" content="' . $blog_title . '">';
@@ -258,11 +255,8 @@ else {
         // Get the post author Twitter ID.
         $post_author_twitter = str_replace(array("\n", '- '), '', $fcontents[2]);
 
-        // Get the published date.
-        $published_iso_date = str_replace('-', '', $fcontents[3]);
-
         // Generate the published date.
-        $published_date = strftime($date_format, strtotime($published_iso_date));
+        $published_date = format_date($fcontents[3]);
 
         // Get the post category.
         $post_category = str_replace(array("\n", '-'), '', $fcontents[4]);
