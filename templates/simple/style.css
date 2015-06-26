@@ -200,6 +200,7 @@ ul.actions {
     width: 100%;
     float: left;
     margin: 0;
+    display: inline;
 }
 
 ul.actions li {
@@ -207,6 +208,7 @@ ul.actions li {
     float: left;
     margin-top: 3px;
     list-style: none;
+        display: inline;
 }
 
 /* Meta
@@ -400,6 +402,10 @@ ul.actions li {
     .post ol {
         max-width: 100%;
     }
+
+    #headerImage {
+        width: 100%;
+    }
     
 }
 
@@ -414,6 +420,8 @@ ul.actions li {
     article {
         padding: 40px 0;
     }
-    
+        #headerImage {
+        width: 100%;
+    }
     
 }
