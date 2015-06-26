@@ -18,7 +18,7 @@ For more information on Dropplets check out the [Dropplets GitHub page](https://
 1. Improve settings/config loading
 1. Updates to simple for page links
 1. Google Analytics integration
-
+1. Category based RSS feeds
 
 ## Getting Started
 - [Installation](#installation)
