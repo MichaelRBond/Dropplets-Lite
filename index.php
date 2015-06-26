@@ -3,10 +3,14 @@
 session_start();
 
 /*-----------------------------------------------------------------------------------*/
-/* If There's a Config Exists, Continue
+/* If the config file doesn't exist, Tell the user to copy over the config file
 /*-----------------------------------------------------------------------------------*/
+if (!file_exists('./config.php')) {
 
-if (file_exists('./config.php')) {
+include "config.html";
+
+exit;
+}
 
 /*-----------------------------------------------------------------------------------*/
 /* Get Settings & Functions
@@ -238,32 +242,4 @@ else {
     save_cache($cachefile,ob_get_contents(),$post_cache);
     
 }
-
-/*-----------------------------------------------------------------------------------*/
-/* Tell the user to copy over the config file
-/*-----------------------------------------------------------------------------------*/
-
-} else { ?>
-
-    <!DOCTYPE html>
-    <html>
-        <head>
-            <meta charset="utf-8" />
-            <title>Let's Get Started</title>
-            <link rel="stylesheet" href="./dropplets/style/style.css" />
-            <link href='http://fonts.googleapis.com/css?family=Lato:100,300' rel='stylesheet' type='text/css'>
-            <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400' rel='stylesheet' type='text/css'>
-            <link rel="shortcut icon" href="./dropplets/style/images/favicon.png">
-        </head>
-
-        <body class="dp-install">
-            <p>Copy over configuration and .htaccess files</p>
-        </body>
-    </html>
-<?php 
-
-/*-----------------------------------------------------------------------------------*/
-/* That's All There is to It
-/*-----------------------------------------------------------------------------------*/
-
-}
+?>
