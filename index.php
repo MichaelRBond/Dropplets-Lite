@@ -203,7 +203,7 @@ else {
     $fcontents           = file($filename); // Define the post file.
 
     $post_title          = format_title($fcontents[0]);  // Get the post title.
-    $post_intro          = render_intro($fcontents[7]); // Get the post intro.
+    $post_intro          = render_metadata_intro($fcontents[7]); // Get the post intro.
     $post_author         = format_author($fcontents[1]);  // Get the post author.
     $post_author_twitter = render_author_twitter($fcontents[2]); // Get the post author Twitter ID.
     $published_date      = format_date($fcontents[3]); // Generate the published date.
