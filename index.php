@@ -22,22 +22,25 @@ include('./dropplets/functions.php');
 $category = NULL;
 if (empty($_GET['filename'])) {
     $filename = NULL;
-} else if($_GET['filename'] == 'rss' || $_GET['filename'] == 'atom') {
+} 
+else if($_GET['filename'] == 'rss' || $_GET['filename'] == 'atom') {
     $filename = $_GET['filename'];
-}  else {
+}  
+else {
     
     //Filename can be /some/blog/post-filename.md We should get the last part only
-    $filename = explode('/',$_GET['filename']);
+    $filename = basename($_GET['filename']);
 
-    // File name could be the name of a category
-    if($filename[count($filename) - 2] == "category") {
-        $category = $filename[count($filename) - 1];
-        $filename = null;
-    } else {
+    if (preg_match("/^category\//", $_GET['filename'])) {
+        $category = $filename;
+        $filename = NULL;
+    }
+    else {
       
         // Individual Post
-        $filename = POSTS_DIR . $filename[count($filename) - 1] . FILE_EXT;
+        $filename = sprintf("%s%s%s",POSTS_DIR, $filename, FILE_EXT);
     }
+
 }
 
 /*-----------------------------------------------------------------------------------*/
@@ -248,14 +251,9 @@ else {
 
     // Define the post file.
     $fcontents = file($filename);
-    $slug_array = explode("/", $filename);
-    $slug_len = count($slug_array);
-
-    // This was hardcoded array index, it should always return the last index.
-    $slug = str_replace(array(FILE_EXT), '', $slug_array[$slug_len - 1]);
 
     // Define the cached file.
-    $cachefile = CACHE_DIR.$slug.'.html';
+    $cachefile = sprintf("%s%s.html",CACHE_DIR,basename($filename,FILE_EXT));
 
     // If there's no file for the selected permalink, grab the 404 page template.
     if (!file_exists($filename)) {
