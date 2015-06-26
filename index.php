@@ -44,7 +44,7 @@ if (empty($_GET['filename'])) {
 /* The Home Page (All Posts)
 /*-----------------------------------------------------------------------------------*/
 
-if ($filename==NULL) {
+if (is_null($filename)) {
 
     $page = (isset($_GET['page']) && is_numeric($_GET['page']) && $_GET['page'] > 1) ? $_GET['page'] : 1;
     $offset = ($page == 1) ? 0 : ($page - 1) * $posts_per_page;
