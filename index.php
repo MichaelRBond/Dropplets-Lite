@@ -292,9 +292,6 @@ else {
         // Generate all page meta.
         $page_meta = implode("\n\t", $get_page_meta);
 
-        // Generate the post.
-        $post = Markdown(join('', $fcontents));
-
         // Get the post template file.
         include $post_file;
 
