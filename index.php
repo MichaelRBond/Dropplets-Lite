@@ -57,14 +57,8 @@ if (is_null($filename)) {
     $cachefile = CACHE_DIR . ($category ? $category : "index") .$page. '.html';
 
     //If index cache file exists, serve it directly wihout getting all posts
-    if (file_exists($cachefile) && $index_cache != 'off') {
+    if (file_exists($cachefile) && $index_cache != 'off') serve_cache($cachefile,"");
 
-        // Get the cached post.
-        include $cachefile;
-        exit;
-
-    // If there is a file for the selected permalink, display and cache the post.
-    }
 
     if($category) {
         $all_posts = get_posts_for_category($category);
@@ -215,67 +209,55 @@ else {
     $cachefile = sprintf("%s%s.html",CACHE_DIR,basename($filename,FILE_EXT));
 
     // If there's no file for the selected permalink, grab the 404 page template.
-    if (!file_exists($filename)) {
-        serve_404();
-    }
+    if (!file_exists($filename)) serve_404();
 
     // If there is a cached file for the selected permalink, display the cached post. 
-    else if (file_exists($cachefile)) {
+    if (file_exists($cachefile)) serve_cache($cachefile,$fcontents[0]);
 
-        // Define site title
-        $page_title = str_replace('# ', '', $fcontents[0]);
+    // Display the individual post
+    ob_start();
+    
+    $fcontents           = file($filename); // Define the post file.
 
-        // Get the cached post.
-        include $cachefile;
+    $post_title          = format_title($fcontents[0]);  // Get the post title.
+    $post_intro          = htmlspecialchars(trim($fcontents[7])); // Get the post intro.
+    $post_author         = format_author($fcontents[1]);  // Get the post author.
+    $post_author_twitter = str_replace(array("\n", '- '), '', $fcontents[2]); // Get the post author Twitter ID.
+    $published_date      = format_date($fcontents[3]); // Generate the published date.
+    $post_category       = str_replace(array("\n", '-'), '', $fcontents[4]); // Get the post category.
+    $post_status         = str_replace(array("\n", '- '), '', $fcontents[5]); // Get the post status.
+    $post_category_link  = get_category_link($post_category); // Get the post category link.
+    $post_link           = $blog_url.str_replace(array(FILE_EXT, POSTS_DIR), '', $filename); // Get the post link.
+    $post_image          = get_post_image_url($filename); // Get the post image url.
+    $post_content        = Markdown(trim(implode("", array_slice( $fcontents, 7)))); // Get the post content
+    $page_title          = trim(str_replace('# ', '', $fcontents[0])); // Get the site title.
 
-        exit;
+    $get_page_meta = get_page_meta();
 
-    } 
-    // If there is a file for the selected permalink, display and cache the post.
-    else {
-        ob_start();
-        
-        $fcontents           = file($filename); // Define the post file.
+    // Generate the page description and author meta.
+    $get_page_meta[] = '<meta name="description" content="' . $post_intro . '">';
+    $get_page_meta[] = '<meta name="author" content="' . $post_author . '">';
 
-        $post_title          = format_title($fcontents[0]);  // Get the post title.
-        $post_intro          = htmlspecialchars(trim($fcontents[7])); // Get the post intro.
-        $post_author         = format_author($fcontents[1]);  // Get the post author.
-        $post_author_twitter = str_replace(array("\n", '- '), '', $fcontents[2]); // Get the post author Twitter ID.
-        $published_date      = format_date($fcontents[3]); // Generate the published date.
-        $post_category       = str_replace(array("\n", '-'), '', $fcontents[4]); // Get the post category.
-        $post_status         = str_replace(array("\n", '- '), '', $fcontents[5]); // Get the post status.
-        $post_category_link  = get_category_link($post_category); // Get the post category link.
-        $post_link           = $blog_url.str_replace(array(FILE_EXT, POSTS_DIR), '', $filename); // Get the post link.
-        $post_image          = get_post_image_url($filename); // Get the post image url.
-        $post_content        = Markdown(trim(implode("", array_slice( $fcontents, 7)))); // Get the post content
-        $page_title          = trim(str_replace('# ', '', $fcontents[0])); // Get the site title.
+    // Generate all page meta.
+    $page_meta = implode("\n\t", $get_page_meta);
 
-        $get_page_meta = get_page_meta();
+    // Get the post template file.
+    include $post_file;
 
-        // Generate the page description and author meta.
-        $get_page_meta[] = '<meta name="description" content="' . $post_intro . '">';
-        $get_page_meta[] = '<meta name="author" content="' . $post_author . '">';
+    $content = ob_get_contents();
+    ob_end_clean();
+    ob_start();
 
-        // Generate all page meta.
-        $page_meta = implode("\n\t", $get_page_meta);
+    // Get the index template file.
+    include_once $index_file;
 
-        // Get the post template file.
-        include $post_file;
-
-        $content = ob_get_contents();
-        ob_end_clean();
-        ob_start();
-
-        // Get the index template file.
-        include_once $index_file;
-
-        // Cache the post on if caching is turned on.
-        save_cache($cachefile,ob_get_contents(),$post_cache);
-    }
+    // Cache the post on if caching is turned on.
+    save_cache($cachefile,ob_get_contents(),$post_cache);
+    
 }
 
 /*-----------------------------------------------------------------------------------*/
-/* Run Setup if No Config
+/* Tell the user to copy over the config file
 /*-----------------------------------------------------------------------------------*/
 
 } else { ?>
