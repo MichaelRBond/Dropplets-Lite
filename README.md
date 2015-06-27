@@ -16,9 +16,13 @@ For more information on Dropplets check out the [Dropplets GitHub page](https://
 
 1. automatically check for expired cache
 1. Improve settings/config loading
-1. Updates to simple for page links
+
+Plugins will be used for additional functionality:
+
 1. Google Analytics integration
 1. Category based RSS feeds
+1. Drag and Drop post uploading
+1. integrated markdown editor
 
 ## Getting Started
 - [Installation](#installation)
