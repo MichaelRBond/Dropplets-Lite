@@ -83,15 +83,10 @@ define('POSTS_PER_PAGE', $posts_per_page);
 $infinite_scroll = "off"; //Infinite scroll works only if pagination is on.
 define('INFINITE_SCROLL', $infinite_scroll);
 
-$post_directory = './posts/';
+define("POST_DIRECTORY",'./posts/');
 $cache_directory = './posts/cache/';
 
-if (glob($post_directory . '*.md') != false)
-{
-    $posts_dir = './posts/';
-} else {
-    $posts_dir = './dropplets/welcome/';
-}
+$posts_dir = (glob(POST_DIRECTORY . '*.md'))?'./posts/':'./dropplets/welcome/';
 
 // Definitions from the settings above.
 define('POSTS_DIR', $posts_dir);
