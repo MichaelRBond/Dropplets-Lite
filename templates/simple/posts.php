@@ -21,7 +21,7 @@
             <ul class="actions">
                 <li><a class="button" href="<?php echo($post_link); ?>">Continue Reading</a></li>
                 <?php if ($category) { ?>
-                <li><a class="button" href="<?php echo($blog_url); ?>">More Articles</a></li>
+                <li><a class="button" href="<?php echo(BLOG_URL); ?>">More Articles</a></li>
                 <?php } ?>
             </ul>
         </div>
