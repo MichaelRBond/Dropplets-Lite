@@ -20,15 +20,15 @@
     <body>
 
         <!-- if header.gif exists in the template directory, use it. otherwise, use the blog name from config.php -->
-        <a href="<?php print $blog_url; ?>">
-        <?php if (file_exists($template_dir."/header.gif")) {?>
-            <img src="<?php echo($template_dir_url); ?>header.gif" />
+        <a href="<?php print BLOG_URL; ?>">
+        <?php if (file_exists(TEMPLATE_DIR."/header.gif")) {?>
+            <img src="<?php echo(TEMPLATE_DIR_URL); ?>header.gif" />
         <?php } else { ?>
-            <h1><?php print $blog_title; ?></h1>
+            <h1><?php print BLOG_TITLE; ?></h1>
         <?php } ?>
         </a>
 
-        <?php if($is_home) { ?>
+        <?php if(IS_HOME) { ?>
         <?php } ?>
         
         <?php echo($content); ?>
