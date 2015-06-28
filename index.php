@@ -141,11 +141,11 @@ else if ($filename == 'rss' || $filename == 'atom') {
     $feed->setLink($blog_url);
 
     if($filename=='rss') {
-        $feed->setDescription($meta_description);
-        $feed->setChannelElement('language', $language);
+        $feed->setDescription(META_DESCRIPTION);
+        $feed->setChannelElement('language', LANGUAGE);
         $feed->setChannelElement('pubDate', date(DATE_RSS, time()));
     } else {
-        $feed->setChannelElement('author', $blog_title.' - ' . $blog_email);
+        $feed->setChannelElement('author', BLOG_TITLE.' - ' . BLOG_EMAIL);
         $feed->setChannelElement('updated', date(DATE_RSS, time()));
     }
 
@@ -158,16 +158,16 @@ else if ($filename == 'rss' || $filename == 'atom') {
                 $item = $feed->createNewItem();
 
                 // Remove HTML from the RSS feed.
-                $item->setLink(rtrim($blog_url, '/').'/'.str_replace(FILE_EXT, '', $post['fname']));
                 $item->setTitle(trim($post['post_title'],"# \n\r\t"));
+                $item->setLink(rtrim(BLOG_URL, '/').'/'.str_replace(FILE_EXT, '', $post['fname']));
                 $item->setDate($post['post_date']);
 
                 // Remove Meta from the RSS feed.
 				$remove_metadata_from = file(rtrim(POSTS_DIR, '/').'/'.$post['fname']);
 
                 if($filename=='rss') {
-                    $item->addElement('author', $blog_email . ' (' . str_replace('-', '', $remove_metadata_from[1]) .')');
-                    $item->addElement('guid', rtrim($blog_url, '/').'/'.str_replace(FILE_EXT, '', $post['fname']));
+                    $item->addElement('author', BLOG_EMAIL . ' (' . str_replace('-', '', $remove_metadata_from[1]) .')');
+                    $item->addElement('guid', rtrim(BLOG_URL, '/').'/'.str_replace(FILE_EXT, '', $post['fname']));
                 }
 
 				// Remove the metadata from the RSS feed.
