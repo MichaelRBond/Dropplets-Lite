@@ -64,8 +64,8 @@ if (!file_exists(CACHE_DIR) && (POST_CACHE != 'off' || INDEX_CACHE != 'off')) {
 
 // Get the active template directory.
 define("TEMPLATE_BASE_DIR",'./templates/');
-define("TEMPLATE_DIR",TEMPLATE_BASE_DIR . $template . '/');
-define("TEMPLATE_DIR_URL",BLOG_URL . 'templates/' . $template . '/');
+define("TEMPLATE_DIR",TEMPLATE_BASE_DIR . ACTIVE_TEMPLATE . '/');
+define("TEMPLATE_DIR_URL",BLOG_URL . 'templates/' . ACTIVE_TEMPLATE . '/');
 
 // Get the active template files.
 define("NOT_FOUND_FILE",TEMPLATE_DIR . '404.php');
