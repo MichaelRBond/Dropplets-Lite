@@ -62,6 +62,8 @@ function serve_404() {
     // Define the site title.
     $page_title = $error_title;
 
+    header("HTTP/1.1 404 Not Found");
+
     if (file_exists($cachefile)) {
         include $cachefile;
         exit;
