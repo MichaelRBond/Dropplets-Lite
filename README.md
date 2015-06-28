@@ -15,7 +15,7 @@ For more information on Dropplets check out the [Dropplets GitHub page](https://
 ## TODO
 
 1. automatically check for expired cache
-1. Improve settings/config loading
+1. update markdown.php
 
 Plugins will be used for additional functionality:
 
