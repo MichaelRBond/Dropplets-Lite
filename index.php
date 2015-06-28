@@ -59,7 +59,7 @@ if (is_null($filename)) {
     $cachefile = CACHE_DIR . ($category ? $category : "index") .$page. '.html';
 
     //If index cache file exists, serve it directly wihout getting all posts
-    if (file_exists($cachefile) && $index_cache != 'off') serve_cache($cachefile,"");
+    if (file_exists($cachefile) && INDEX_CACHE != 'off') serve_cache($cachefile,"");
 
 
     if($category) {
@@ -68,9 +68,9 @@ if (is_null($filename)) {
         $all_posts = get_all_posts();
     }
 
-    $pagination = ($pagination_on_off != "off") ? get_pagination($page,round(count($all_posts)/ $posts_per_page)) : "";
-    define('PAGINATION', $pagination);
-    $posts = ($pagination_on_off != "off") ? array_slice($all_posts,$offset,($posts_per_page > 0) ? $posts_per_page : null) : $all_posts;
+    $pagination = (PAGINATION_ON_OFF != "off") ? get_pagination($page,round(count($all_posts)/ POSTS_PER_PAGE)) : "";
+    define('PAGINATION', $pagination); // @TODO does this get used anywhere else?
+    $posts = (PAGINATION_ON_OFF != "off") ? array_slice($all_posts,$offset,(POSTS_PER_PAGE > 0) ? POSTS_PER_PAGE : null) : $all_posts;
 
     if($posts) {
         ob_start();
@@ -100,19 +100,19 @@ if (is_null($filename)) {
             if ($post_status == 'draft') continue;
 
             // Get the milti-post template file.
-            include $posts_file;
+            include POSTS_FILE;
         }
         echo $content;
         $content = ob_get_contents();
 
         // Get the site title
-        $page_title = $blog_title;
+        $page_title = BLOG_TITLE;
 
         $get_page_meta = get_page_meta();
 
         // Get the page description and author meta.
-        $get_page_meta[] = '<meta name="description" content="' . $meta_description . '">';
-        $get_page_meta[] = '<meta name="author" content="' . $blog_title . '">';
+        $get_page_meta[] = '<meta name="description" content="' . META_DESCRIPTION . '">';
+        $get_page_meta[] = '<meta name="author" content="' . BLOG_TITLE . '">';
 
         // Get all page meta.
         $page_meta = implode("\n", $get_page_meta);
@@ -124,10 +124,10 @@ if (is_null($filename)) {
         ob_start();
 
         // Get the index template file.
-        include_once $index_file;
+        include_once INDEX_FILE;
 
         //Now that we have the whole index page generated, put it in cache folder
-        save_cache($cachefile,ob_get_contents(),$index_cache);
+        save_cache($cachefile,ob_get_contents(),INDEX_CACHE);
     }
 
 /*-----------------------------------------------------------------------------------*/
@@ -227,17 +227,17 @@ else {
     $page_meta = implode("\n\t", $get_page_meta);
 
     // Get the post template file.
-    include $post_file;
+    include POST_FILE;
 
     $content = ob_get_contents();
     ob_end_clean();
     ob_start();
 
     // Get the index template file.
-    include_once $index_file;
+    include_once INDEX_FILE;
 
     // Cache the post on if caching is turned on.
-    save_cache($cachefile,ob_get_contents(),$post_cache);
+    save_cache($cachefile,ob_get_contents(),POST_CACHE);
     
 }
 ?>
