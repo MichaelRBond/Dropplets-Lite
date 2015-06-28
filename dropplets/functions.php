@@ -150,7 +150,6 @@ function render_intro($intro) {
 
 function render_metadata_intro($intro) {
 
-
     return htmlentities(trim($intro));
 }
 
@@ -159,7 +158,7 @@ function render_metadata_intro($intro) {
 /*-----------------------------------------------------------------------------------*/
 function render_author_twitter($twitter_handle) {
 
-    return str_replace(array("\n", '- '), '', $twitter_handle);
+    return $twitter_handle;
 }
 
 /*-----------------------------------------------------------------------------------*/
@@ -167,7 +166,7 @@ function render_author_twitter($twitter_handle) {
 /*-----------------------------------------------------------------------------------*/
 function render_category($category) {
 
-    return str_replace(array("\n", '-'), '', $category);
+    return $category;
 }
 
 /*-----------------------------------------------------------------------------------*/
@@ -175,7 +174,7 @@ function render_category($category) {
 /*-----------------------------------------------------------------------------------*/
 function render_status($status) {
 
-    return str_replace(array("\n", '- '), '', $status);
+    return $status;
 }
 
 /*-----------------------------------------------------------------------------------*/
@@ -195,7 +194,7 @@ function render_post_link($filename) {
 /*-----------------------------------------------------------------------------------*/
 function render_page_title($title) {
 
-    return trim(str_replace('# ', '', $title));
+    return trim($title,"# \t\n\r\0\x0B");
 }
 
 /*-----------------------------------------------------------------------------------*/
@@ -213,7 +212,7 @@ function format_title($title) {
 
 function format_author($author) {
 
-    return str_replace(array("\n", '-'), '', $author);
+    return $author;
 }
 
 /*-----------------------------------------------------------------------------------*/
@@ -226,12 +225,16 @@ function format_date($date) {
     // that can be referenced as a class
     include('./dropplets/settings.php');
 
-    $published_iso_date = str_replace('-', '', $date);
-
     // Generate the published date.
-    $published_date = date($date_format, strtotime($published_iso_date));
+    $published_date = date($date_format, strtotime($date));
 
     return $published_date;
+
+}
+
+function cleanup_post_metadata($value) {
+
+    return trim($value,"- \t\n\r\0\x0B");
 
 }
 
@@ -252,14 +255,14 @@ function get_all_posts($options = array()) {
 
                 
                 $fcontents           = file(POSTS_DIR.$entry); // Define the post file.
-                
-                $post_title          = $fcontents[0]; // Define the post title.
-                $post_author         = $fcontents[1]; // Define the post author.
-                $post_author_twitter = $fcontents[2]; // Define the post author Twitter account.
-                $post_date           = $fcontents[3]; // Define the published date.
-                $post_category       = $fcontents[4]; // Define the post category.
-                $post_status         = $fcontents[5]; // Define the post status.
-                $post_intro          = $fcontents[7]; // Define the post intro.
+
+                $post_title          = cleanup_post_metadata($fcontents[0]); // Define the post title.
+                $post_author         = cleanup_post_metadata($fcontents[1]); // Define the post author.
+                $post_author_twitter = cleanup_post_metadata($fcontents[2]); // Define the post author Twitter account.
+                $post_date           = cleanup_post_metadata($fcontents[3]); // Define the published date.
+                $post_category       = cleanup_post_metadata($fcontents[4]); // Define the post category.
+                $post_status         = cleanup_post_metadata($fcontents[5]); // Define the post status.
+                $post_intro          = cleanup_post_metadata($fcontents[7]); // Define the post intro.
 
                 // Early return if we only want posts from a certain category
                 if($options["category"] && $options["category"] != trim(strtolower($post_category))) {
@@ -281,7 +284,9 @@ function get_all_posts($options = array()) {
                 $post_contents[]        = $post_content;
             }
         }
-        array_multisort($post_dates, SORT_DESC, $files);
+
+        if (is_array($post_dates)) array_multisort($post_dates, SORT_DESC, $files);
+        
         return $files;
 
     } else {
@@ -415,6 +420,21 @@ function count_premium_templates($type = 'all') {
         echo count($templates_count);
     }
 }
+
+/*-----------------------------------------------------------------------------------*/
+/* If is Home (Could use "is_single", "is_category" as well.)
+/*-----------------------------------------------------------------------------------*/
+
+$homepage = parse_url(BLOG_URL, PHP_URL_PATH);
+
+// Get the current page.    
+$currentpage  = $_SERVER["REQUEST_URI"];
+
+// If is home.
+$is_home = ($homepage==$currentpage);
+define('IS_HOME', $is_home);
+define('IS_CATEGORY', (bool)strstr($_SERVER['REQUEST_URI'], '/category/'));
+define('IS_SINGLE', !(IS_HOME || IS_CATEGORY));
 
 /*-----------------------------------------------------------------------------------*/
 /* Include All Plugins in Plugins Directory
