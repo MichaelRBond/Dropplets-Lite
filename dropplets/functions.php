@@ -60,7 +60,7 @@ function serve_404() {
     $cachefile = CACHE_DIR.'404.html';
 
     // Define the site title.
-    $page_title = $error_title;
+    $page_title = ERROR_TITLE;
 
     header("HTTP/1.1 404 Not Found");
 
@@ -287,7 +287,7 @@ function get_posts_for_category($category) {
 /*-----------------------------------------------------------------------------------*/
 function get_post_image_url($filename)
 {
-    global $blog_url;
+    
     $supportedFormats = array( "jpg", "png", "gif" );
     $slug = pathinfo($filename, PATHINFO_FILENAME);
 
@@ -295,7 +295,7 @@ function get_post_image_url($filename)
     {
         $imgFile = sprintf("%s%s.%s", POSTS_DIR, $slug, $fmt);
         if (file_exists($imgFile))
-            return sprintf("%s/%s.%s", "${blog_url}posts", $slug, $fmt);
+            return sprintf("%s/%s.%s", BLOG_URL."posts", $slug, $fmt);
     }
 
     return false;

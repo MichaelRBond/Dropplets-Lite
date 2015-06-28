@@ -52,7 +52,7 @@ else {
 if (is_null($filename)) {
 
     $page = (isset($_GET['page']) && is_numeric($_GET['page']) && $_GET['page'] > 1) ? $_GET['page'] : 1;
-    $offset = ($page == 1) ? 0 : ($page - 1) * $posts_per_page;
+    $offset = ($page == 1) ? 0 : ($page - 1) * POSTS_PER_PAGE;
 
     //Index page cache file name, will be used if index_cache = "on"
 
@@ -91,7 +91,7 @@ if (is_null($filename)) {
             if ($category) {
                 $post_link = trim(strtolower($post_category)).'/'.str_replace(FILE_EXT, '', $post['fname']);
             } else {
-                $post_link = $blog_url.str_replace(FILE_EXT, '', $post['fname']);
+                $post_link = BLOG_URL.str_replace(FILE_EXT, '', $post['fname']);
             }
 
             // Get the post image url.
@@ -137,8 +137,8 @@ if (is_null($filename)) {
 else if ($filename == 'rss' || $filename == 'atom') {
     ($filename=='rss') ? $feed = new FeedWriter(RSS2) : $feed = new FeedWriter(ATOM);
 
-    $feed->setTitle($blog_title);
-    $feed->setLink($blog_url);
+    $feed->setTitle(BLOG_TITLE);
+    $feed->setLink(BLOG_URL);
 
     if($filename=='rss') {
         $feed->setDescription(META_DESCRIPTION);
@@ -154,7 +154,7 @@ else if ($filename == 'rss' || $filename == 'atom') {
     if($posts) {
         $c=0;
         foreach($posts as $post) {
-            if($c<$feed_max_items) {
+            if($c<FEED_MAX_ITEMS) {
                 $item = $feed->createNewItem();
 
                 // Remove HTML from the RSS feed.
