@@ -33,7 +33,7 @@ else {
     //Filename can be /some/blog/post-filename.md We should get the last part only
     $filename = basename($_GET['filename']);
 
-    if (preg_match("/^category\//", $_GET['filename'])) {
+    if (preg_match("/^category\//", $_GET['filename']) && substr_count($_GET['filename'],"/") == 1) {
         $category = $filename;
         $filename = NULL;
     }
@@ -42,7 +42,6 @@ else {
         // Individual Post
         $filename = sprintf("%s%s%s",POSTS_DIR, $filename, FILE_EXT);
     }
-
 }
 
 /*-----------------------------------------------------------------------------------*/
