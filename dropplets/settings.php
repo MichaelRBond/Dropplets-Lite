@@ -35,6 +35,21 @@ define('FOOTER_INJECT', stripslashes($footer_inject));
 define('ACTIVE_TEMPLATE', $template);
 
 /*-----------------------------------------------------------------------------------*/
+/* If is Home (Could use "is_single", "is_category" as well.)
+/*-----------------------------------------------------------------------------------*/
+
+$homepage = parse_url(BLOG_URL, PHP_URL_PATH);
+
+// Get the current page.    
+$currentpage  = $_SERVER["REQUEST_URI"];
+
+// If is home.
+$is_home = ($homepage==$currentpage);
+define('IS_HOME', $is_home);
+define('IS_CATEGORY', (bool)strstr($_SERVER['REQUEST_URI'], '/category/'));
+define('IS_SINGLE', !(IS_HOME || IS_CATEGORY));
+
+/*-----------------------------------------------------------------------------------*/
 /* Definitions (These Should Be Moved to "Settings")
 /*-----------------------------------------------------------------------------------*/
 
