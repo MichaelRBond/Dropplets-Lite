@@ -26,6 +26,11 @@ define('PAGINATION_ON_OFF', $pagination);
 define('POSTS_PER_PAGE', 	$posts_per_page);
 define('INFINITE_SCROLL', 	$infinite_scroll);
 
+unset($blog_email, $blog_twitter, $blog_url, $blog_title, $meta_description, 
+	  $header_inject, $footer_inject, $template, $post_cache, $index_cache, 
+	  $language, $feed_max_items, $date_format, $error_text, $error_title,
+	  $pagination, $posts_per_page, $infinite_scroll);
+
 /*-----------------------------------------------------------------------------------*/
 /* If is Home 
 /*-----------------------------------------------------------------------------------*/
