@@ -55,11 +55,9 @@ define('IS_SINGLE', !(IS_HOME || IS_CATEGORY));
 
 $language = 'en-us';
 $feed_max_items = '10';
-$date_format = '%B %d, %Y';
+$date_format = 'F jS, Y';
 $error_title = 'Sorry, But That&#8217;s Not Here';
 $error_text = 'Really sorry, but what you&#8217;re looking for isn&#8217;t here. Click the button below to find something else that might interest you.';
-
-setlocale(LC_ALL, '');
 
 /*-----------------------------------------------------------------------------------*/
 /* Post Configuration
@@ -108,11 +106,14 @@ if (!file_exists(CACHE_DIR) && ($post_cache != 'off' || $index_cache != 'off')) 
 /*-----------------------------------------------------------------------------------*/
 
 // Get the active template directory.
-$template_dir = './templates/' . $template . '/';
-$template_dir_url = $blog_url . 'templates/' . $template . '/';
+$template_base_dir = './templates/';
+$template_dir      = $template_base_dir . $template . '/';
+$template_dir_url  = $blog_url . 'templates/' . $template . '/';
 
 // Get the active template files.
-$index_file = $template_dir . 'index.php';
-$post_file = $template_dir . 'post.php';
-$posts_file = $template_dir . 'posts.php';
-$not_found_file = $template_dir . '404.php';
+$index_file        = $template_dir . 'index.php';
+$post_file         = $template_dir . 'post.php';
+$posts_file        = $template_dir . 'posts.php';
+$not_found_file    = $template_dir . '404.php';
+
+define(TEMPLATE_DIR,$template_base_dir);
