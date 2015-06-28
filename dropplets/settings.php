@@ -10,29 +10,30 @@ $display_errors = false;
 ini_set('display_errors', $display_errors);
 
 /*-----------------------------------------------------------------------------------*/
-/* Post Cache ('on' or 'off')
-/*-----------------------------------------------------------------------------------*/
-
-define("POST_CACHE",'off');
-define("INDEX_CACHE",'off');
-
-/*-----------------------------------------------------------------------------------*/
 /* Configuration & Options
 /*-----------------------------------------------------------------------------------*/
 
 include('./config.php');
 
 // Definitions from the included configs above.
-define('BLOG_EMAIL', $blog_email);
-define('BLOG_TWITTER', $blog_twitter);
-define('BLOG_URL', $blog_url);
-define('BLOG_TITLE', $blog_title);
-define('META_DESCRIPTION', $meta_description);
-define('INTRO_TITLE', $intro_title);
-define('INTRO_TEXT', $intro_text);
-define('HEADER_INJECT', stripslashes($header_inject));
-define('FOOTER_INJECT', stripslashes($footer_inject));
-define('ACTIVE_TEMPLATE', $template);
+define('BLOG_EMAIL',        $blog_email);
+define('BLOG_TWITTER',      $blog_twitter);
+define('BLOG_URL',          $blog_url);
+define('BLOG_TITLE',        $blog_title);
+define('META_DESCRIPTION',  $meta_description);
+define('HEADER_INJECT',     stripslashes($header_inject));
+define('FOOTER_INJECT',     stripslashes($footer_inject));
+define('ACTIVE_TEMPLATE',   $template);
+define("POST_CACHE",        $post_cache);
+define("INDEX_CACHE",       $index_cache);
+define("LANGUAGE",          $language);
+define("FEED_MAX_ITEMS",    $feed_max_items);
+define("DATE_FORMAT",       $date_format);
+define("ERROR_TITLE",       $error_title);
+define("ERROR_TEXT",        $error_text);
+define('PAGINATION_ON_OFF', $pagination); 
+define('POSTS_PER_PAGE', 	$posts_per_page);
+define('INFINITE_SCROLL', 	$infinite_scroll);
 
 /*-----------------------------------------------------------------------------------*/
 /* If is Home 
@@ -43,22 +44,8 @@ define('IS_CATEGORY', (bool)strstr($_SERVER['REQUEST_URI'], '/category/'));
 define('IS_SINGLE', !(IS_HOME || IS_CATEGORY));
 
 /*-----------------------------------------------------------------------------------*/
-/* Definitions (These Should Be Moved to "Settings")
-/*-----------------------------------------------------------------------------------*/
-
-define("LANGUAGE",'en-us');
-define("FEED_MAX_ITEMS",'10');
-define("DATE_FORMAT",'F jS, Y');
-define("ERROR_TITLE",'Sorry, But That&#8217;s Not Here');
-define("ERROR_TEXT",'Really sorry, but what you&#8217;re looking for isn&#8217;t here. Click the button below to find something else that might interest you.');
-
-/*-----------------------------------------------------------------------------------*/
 /* Post Configuration
 /*-----------------------------------------------------------------------------------*/
-
-define('PAGINATION_ON_OFF', "off"); //Infinite scroll by default?
-define('POSTS_PER_PAGE', 4);
-define('INFINITE_SCROLL', "off"); //Infinite scroll works only if pagination is on.
 
 define("POST_DIRECTORY",'./posts/');
 
