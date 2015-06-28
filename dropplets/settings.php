@@ -1,5 +1,7 @@
 <?php 
 
+// @TODO remove all the variables and define everything directly as constants
+
 /*-----------------------------------------------------------------------------------*/
 /* Debug Mode
 /*-----------------------------------------------------------------------------------*/
@@ -15,6 +17,9 @@ ini_set('display_errors', $display_errors);
 
 $post_cache = 'off';
 $index_cache = 'off';
+
+define("POST_CACHE",$post_cache);
+define("INDEX_CACHE",$index_cache);
 
 /*-----------------------------------------------------------------------------------*/
 /* Configuration & Options
@@ -58,6 +63,12 @@ $feed_max_items = '10';
 $date_format = 'F jS, Y';
 $error_title = 'Sorry, But That&#8217;s Not Here';
 $error_text = 'Really sorry, but what you&#8217;re looking for isn&#8217;t here. Click the button below to find something else that might interest you.';
+
+define("LANGUAGE",$language);
+define("FEED_MAX_ITEMS",$feed_max_items);
+define("DATE_FORMAT",$date_format);
+define("ERROR_TITLE",$error_title);
+define("ERROR_TEXT",$error_text);
 
 /*-----------------------------------------------------------------------------------*/
 /* Post Configuration
@@ -116,4 +127,10 @@ $post_file         = $template_dir . 'post.php';
 $posts_file        = $template_dir . 'posts.php';
 $not_found_file    = $template_dir . '404.php';
 
-define(TEMPLATE_DIR,$template_base_dir);
+define("TEMPLATE_BASE_DIR",$template_base_dir);
+define("TEMPLATE_DIR",$template_dir);
+define("TEMPLATE_DIR_URL",$template_dir_url);
+define("NOT_FOUND_FILE",$not_found_file);
+define("INDEX_FILE",$index_file);
+define("POST_FILE",$post_file);
+define("POSTS_FILE",$posts_file);

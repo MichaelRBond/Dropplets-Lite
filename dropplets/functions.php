@@ -56,10 +56,6 @@ function serve_cache($cachefile,$page_title) {
 
 function serve_404() {
 
-    // @TODO This is horrible. Settings need to be plopped into a variable
-    // that can be referenced as a class
-    include('./dropplets/settings.php');
-
     //Change the cache file to 404 page.
     $cachefile = CACHE_DIR.'404.html';
 
@@ -75,7 +71,7 @@ function serve_404() {
     ob_start();
     
     // Get the 404 page template.
-    include $not_found_file;
+    include NOT_FOUND_FILE;
 
     // Get the contents.
     $content = ob_get_contents();
@@ -87,7 +83,7 @@ function serve_404() {
     ob_start();
 
     // Get the index template file.
-    include_once $index_file;
+    include_once INDEX_FILE;
 
     // Cache the post on if caching is turned on.
     save_cache($cachefile,ob_get_contents());
@@ -101,26 +97,22 @@ function serve_404() {
 
 function get_page_meta() {
 
-    // @TODO This is horrible. Settings need to be plopped into a variable
-    // that can be referenced as a class
-    include('./dropplets/settings.php');
-
     $get_page_meta = array();
 
     // Get the Twitter card.
     $get_page_meta[] = '<meta name="twitter:card" content="summary">';
-    $get_page_meta[] = '<meta name="twitter:site" content="' . $blog_twitter . '">';
-    $get_page_meta[] = '<meta name="twitter:title" content="' . $blog_title . '">';
-    $get_page_meta[] = '<meta name="twitter:description" content="' . $meta_description . '">';
-    $get_page_meta[] = '<meta name="twitter:creator" content="' . $blog_twitter . '">';
-    $get_page_meta[] = '<meta name="twitter:domain" content="' . $blog_url . '">';
+    $get_page_meta[] = '<meta name="twitter:site" content="' . BLOG_TWITTER . '">';
+    $get_page_meta[] = '<meta name="twitter:title" content="' . BLOG_TITLE . '">';
+    $get_page_meta[] = '<meta name="twitter:description" content="' . META_DESCRIPTION . '">';
+    $get_page_meta[] = '<meta name="twitter:creator" content="' . BLOG_TWITTER . '">';
+    $get_page_meta[] = '<meta name="twitter:domain" content="' . BLOG_URL . '">';
 
     // Get the Open Graph tags.
     $get_page_meta[] = '<meta property="og:type" content="website">';
-    $get_page_meta[] = '<meta property="og:title" content="' . $blog_title . '">';
-    $get_page_meta[] = '<meta property="og:site_name" content="' . $blog_title . '">';
-    $get_page_meta[] = '<meta property="og:url" content="' .$blog_url . '">';
-    $get_page_meta[] = '<meta property="og:description" content="' . $meta_description . '">';
+    $get_page_meta[] = '<meta property="og:title" content="' . BLOG_TITLE . '">';
+    $get_page_meta[] = '<meta property="og:site_name" content="' . BLOG_TITLE . '">';
+    $get_page_meta[] = '<meta property="og:url" content="' .BLOG_URL . '">';
+    $get_page_meta[] = '<meta property="og:description" content="' . META_DESCRIPTION . '">';
 
     return $get_page_meta;
 
@@ -131,11 +123,7 @@ function get_page_meta() {
 /*-----------------------------------------------------------------------------------*/
 function get_category_link($category) {
 
-    // @TODO This is horrible. Settings need to be plopped into a variable
-    // that can be referenced as a class
-    include('./dropplets/settings.php');
-
-    return $blog_url.'category/'.urlencode(trim(strtolower($category)));
+    return BLOG_URL.'category/'.urlencode(trim(strtolower($category)));
 
 }
 
@@ -182,11 +170,7 @@ function render_status($status) {
 /*-----------------------------------------------------------------------------------*/
 function render_post_link($filename) {
 
-    // @TODO This is horrible. Settings need to be plopped into a variable
-    // that can be referenced as a class
-    include('./dropplets/settings.php');
-
-    return $blog_url.str_replace(array(FILE_EXT, POSTS_DIR), '', $filename);
+    return BLOG_URL.str_replace(array(FILE_EXT, POSTS_DIR), '', $filename);
 }
 
 /*-----------------------------------------------------------------------------------*/
@@ -221,14 +205,7 @@ function format_author($author) {
 
 function format_date($date) {
 
-    // @TODO This is horrible. Settings need to be plopped into a variable
-    // that can be referenced as a class
-    include('./dropplets/settings.php');
-
-    // Generate the published date.
-    $published_date = date($date_format, strtotime($date));
-
-    return $published_date;
+    return date(DATE_FORMAT, strtotime($date));
 
 }
 
@@ -450,7 +427,7 @@ foreach(glob('./plugins/' . '*.php') as $plugin){
 
 function get_header() {
     
-    include TEMPLATE_DIR."generic/header.php";
+    include TEMPLATE_BASE_DIR."generic/header.php";
 
     print "<!-- User Header Injection -->\n";
     print HEADER_INJECT;
@@ -466,7 +443,7 @@ function get_header() {
 
 function get_footer() { 
     
-    include TEMPLATE_DIR."generic/footer.php";
+    include TEMPLATE_BASE_DIR."generic/footer.php";
     
     print "<!-- User Footer Injection -->\n";
     print FOOTER_INJECT;
