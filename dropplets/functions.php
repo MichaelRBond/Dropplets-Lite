@@ -162,9 +162,18 @@ function render_author_twitter($twitter_handle) {
 /*-----------------------------------------------------------------------------------*/
 /* Format Post category
 /*-----------------------------------------------------------------------------------*/
-function render_category($category) {
+function render_category($categories) {
 
-    return $category;
+    $links = array();
+
+    foreach ($categories as $I=>$category) {
+        $links[] = sprintf('<a href="%s">%s</a>',
+            get_category_link($I),
+            $category
+            );
+    }
+
+    return implode(", ",$links);
 }
 
 /*-----------------------------------------------------------------------------------*/
@@ -225,6 +234,18 @@ function cleanup_post_metadata($value) {
 
 }
 
+function split_categories($category) {
+    // @todo trim, str to lower
+    $categories = array();
+    
+    foreach (explode(",",$category) as $category) {
+        $index              = trim(strtolower($category));
+        $categories[$index] = trim($category);
+    }
+
+    return $categories;
+}
+
 /*-----------------------------------------------------------------------------------*/
 /* Get All Posts Function
 /*-----------------------------------------------------------------------------------*/
@@ -247,12 +268,12 @@ function get_all_posts($options = array()) {
                 $post_author         = cleanup_post_metadata($fcontents[1]); // Define the post author.
                 $post_author_twitter = cleanup_post_metadata($fcontents[2]); // Define the post author Twitter account.
                 $post_date           = cleanup_post_metadata($fcontents[3]); // Define the published date.
-                $post_category       = cleanup_post_metadata($fcontents[4]); // Define the post category.
+                $post_category       = split_categories(cleanup_post_metadata($fcontents[4])); // Define the post category.
                 $post_status         = cleanup_post_metadata($fcontents[5]); // Define the post status.
                 $post_intro          = cleanup_post_metadata($fcontents[7]); // Define the post intro.
 
                 // Early return if we only want posts from a certain category
-                if($options["category"] && $options["category"] != trim(strtolower($post_category))) {
+                if($options["category"] && !array_key_exists($options["category"],$post_category)) {
                     continue;
                 }
 

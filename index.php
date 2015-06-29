@@ -76,19 +76,19 @@ if (is_null($filename)) {
         $content = '';
         foreach($posts as $post) {
             
-            $post_title          = format_title(cleanup_post_metadata($post['post_title']));                   // Get the post title.
-            $post_author         = format_author(cleanup_post_metadata($post['post_author']));                 // Get the post author.
-            $post_author_twitter = render_author_twitter(cleanup_post_metadata($post['post_author_twitter'])); // Get the post author twitter id.
-            $published_date      = format_date(cleanup_post_metadata($post['post_date']));                     // Generate the published date.
-            $post_category       = render_category(cleanup_post_metadata($post['post_category']));             // Get the post category.
-            $post_category_link  = get_category_link(cleanup_post_metadata($post_category));                   // Get the post category link.
-            $post_status         = render_status(cleanup_post_metadata($post['post_status']));                 // Get the post status.
-            $post_intro          = render_intro($post['post_intro']);                                          // Get the post intro.
-            $post_content        = $post['post_content'];                                                      // Get the post content
+            $post_title          = format_title($post['post_title']);                   // Get the post title.
+            $post_author         = format_author($post['post_author']);                 // Get the post author.
+            $post_author_twitter = render_author_twitter($post['post_author_twitter']); // Get the post author twitter id.
+            $published_date      = format_date($post['post_date']);                     // Generate the published date.
+            $post_category       = render_category($post['post_category']);             // Get the post category.
+            // $post_category_link  = get_category_link($post_category);                   // Get the post category link.
+            $post_status         = render_status($post['post_status']);                 // Get the post status.
+            $post_intro          = render_intro($post['post_intro']);                   // Get the post intro.
+            $post_content        = $post['post_content'];                               // Get the post content
 
             // Get the post link.
             if ($category) {
-                $post_link = trim(strtolower($post_category)).'/'.str_replace(FILE_EXT, '', $post['fname']);
+                $post_link = trim(strtolower($category)).'/'.str_replace(FILE_EXT, '', $post['fname']);
             } else {
                 $post_link = BLOG_URL.str_replace(FILE_EXT, '', $post['fname']);
             }
@@ -208,9 +208,9 @@ else {
     $post_author         = format_author(cleanup_post_metadata($fcontents[1]));         // Get the post author.
     $post_author_twitter = render_author_twitter(cleanup_post_metadata($fcontents[2])); // Get the post author Twitter ID.
     $published_date      = format_date(cleanup_post_metadata($fcontents[3]));           // Generate the published date.
-    $post_category       = render_category(cleanup_post_metadata($fcontents[4]));       // Get the post category.
+    $post_category       = render_category(split_categories(cleanup_post_metadata($fcontents[4])));       // Get the post category.
     $post_status         = render_status(cleanup_post_metadata($fcontents[5]));         // Get the post status.
-    $post_category_link  = get_category_link($post_category);                           // Get the post category link.
+    // $post_category_link  = get_category_link($post_category);                           // Get the post category link.
     $post_link           = render_post_link($filename);                                 // Get the post link.
     $post_image          = get_post_image_url($filename);                               // Get the post image url.
     $post_content        = Markdown(trim(implode("", array_slice( $fcontents, 7))));    // Get the post content
