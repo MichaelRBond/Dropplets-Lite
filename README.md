@@ -45,7 +45,7 @@ With Dropplets, you write your posts offline (using the text or Markdown editor 
     - Post Author Name (e.g. "Dropplets")
     - Post Author Twitter Handle (e.g. "dropplets")
     - Publish Date in YYYY/MM/DD Format (e.g. "2013/04/28")
-    - Post Category (e.g. "Random Thoughts")
+    - Post Category (e.g. "Random Thoughts" or, "Random Thoughts, Biking" for multiple categories)
     - Post Status (e.g. "published" or "draft")
 
     Your post text starts here. 
@@ -59,6 +59,8 @@ Some templates include the ability to add a post image or thumbnail along with y
     my-first-blog-post.jpg
 
 Post file names are used to structure post permalinks on your blog. So, a post file saved as **my-first-blog-post.md** will result in **yoursite.com/my-first-blog-post** as the post permalink.
+
+Posts can be in multiple categories. Categories are comma separated. 
 
 ## Publishing Posts
 After you've finished writing your post offline, you can then publish your post:
